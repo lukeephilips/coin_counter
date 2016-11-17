@@ -1,26 +1,31 @@
 class String
   define_method(:coin_counter) do
     pocket_value = self.to_f()*100.to_i()
-    puts pocket_value
     output = []
     coin_values = {'quarter' => 25, 'dime' => 10, 'nickel' => 05, 'pennie' => 01}
     counter = {'quarter' => 0, 'dime' => 0, 'nickel' => 0, 'pennie' => 0}
+    change_tray = { 'quarter' => 2, 'dime' => 1, 'nickel' => 10, 'pennie' => 100}
 
-    coin_values.values().each() do |value|
-      until pocket_value < (value)
-        pocket_value -= value
-        counter[coin_values.key(value)] +=1
+    change_tray.keys.each() do |tray_key|
+      out_of_coin = false
+      until pocket_value < coin_values[tray_key] or out_of_coin == true
+        if change_tray[tray_key] == 0
+          out_of_coin = true
+        else
+          pocket_value -= coin_values[tray_key]
+          counter[tray_key] +=1
+          change_tray[tray_key] -=1
+        end
       end
     end
 
-    counter.values.each() do |value|
-      if value > 1
-        output.push(value.to_s() + " " + counter.key(value) + "s")
-      elsif value > 0
-        output.push(value.to_s() + " " + counter.key(value))
+    counter.keys.each() do |counterkey|
+      if counter[counterkey] > 1
+        output.push(counter[counterkey].to_s() + " " + counterkey + "s")
+      elsif counter[counterkey] == 1
+        output.push(counter[counterkey].to_s() + " " + counterkey)
       end
     end
-    puts pocket_value
     output.join(" ")
   end
 end

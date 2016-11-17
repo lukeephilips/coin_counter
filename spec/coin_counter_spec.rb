@@ -18,8 +18,12 @@ describe('String#coin_counter') do
   end
 
   it(' returns the correct amount of change for .49 cents') do
-    expect(".49".coin_counter()).to(eq("1 quarter 2 dimes 4 pennies"))
+    expect(".49".coin_counter()).to(eq("1 quarter 1 dime 2 nickels 4 pennies"))
   end
+
+
+
+
 
 
 end
